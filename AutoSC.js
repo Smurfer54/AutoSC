@@ -40,18 +40,18 @@ function delayStartAgain(){
 
 
 function mainLoop() {    
-    if AutoSc {
+    if (AutoSc) {
     Storage();
     BuyEnergy();
     BuyT1();
-    BuyScience();
-    BuyT2();
-    BuyT3();
-    BuyT4();
-    BuyT5();
-    if (ring = 0)   BuyRing();
-    BuySwarm();
-    BuySphere();
+//    BuyScience();
+//    BuyT2();
+ //   BuyT3();
+  //  BuyT4();
+   // BuyT5();
+//    if (ring = 0)   BuyRing();
+ //   BuySwarm();
+  //  BuySphere();
 }
 }
 function Storage() {
@@ -75,6 +75,43 @@ function Storage() {
     if (getMaxPlasma()*.9 > plasma) convertPlasma('meteorite');
     upgradeMeteoriteStorage();
 }
+
+
+
+function BuyEnergy() {
+    if  (charcoalEngine < T1) {
+        while ((charcoalEngineMetalCost / metalps + charcoalEngineGemCost / gemps ) <= T1 ) {
+            getCharcoalEngine();
+        }
+    } 
+    if  (solarPanel < T1) {
+        while ((solarPanelMetalCost / metalps + solarPanelGemCost / gemps ) <= T1 ) {
+            getSolarPanel();
+        }
+    } 
+    if  (methaneStation < T1) {
+        while ((methaneStationLunariteCost / lunariteps + methaneStationTitaniumCost / titaniumps ) <= T1 ) {
+            getMethaneStation();
+        }
+    } 
+    if  (nuclearStation < T1) {
+        while ((nuclearStationLunariteCost / lunariteps + nuclearStationTitaniumCost / titaniumps ) <= T1 ) {
+            getNuclearStation();
+        }
+    } 
+    if  (magmatic < T1) {
+        while ((magmaticLunariteCost / lunariteps + magmaticSilverCost / silverps + magmaticGemCost / gemps ) <= T1 ) {
+            getMagmatic();
+        }
+    }     
+    if  (fusionReactor < T1) {
+        while ((fusionReactorLunariteCost / lunariteps + fusionReactorTitaniumCost / titaniumps + fusionReactorSiliconCost / siliconps ) <= T1 ) {
+            getFusionReactor();
+        }
+    }     
+}    
+   
+
 
 function BuyT1() {
     
@@ -271,37 +308,3 @@ function BuyT2(){
     
     
 }
-
-function BuyEnergy() {
-    if  (charcoalEngine < T1) {
-        while ((charcoalEngineMetalCost / metalps + charcoalEngineGemCost / gemps ) <= T1 ) {
-            getCharcoalEngine();
-        }
-    } 
-    if  (solarPanel < T1) {
-        while ((solarPanelMetalCost / metalps + solarPanelGemCost / gemps ) <= T1 ) {
-            getSolarPanel();
-        }
-    } 
-    if  (methaneStation < T1) {
-        while ((methaneStationLunariteCost / lunariteps + methaneStationTitaniumCost / titaniumps ) <= T1 ) {
-            getMethaneStation();
-        }
-    } 
-    if  (nuclearStation < T1) {
-        while ((nuclearStationLunariteCost / lunariteps + nuclearStationTitaniumCost / titaniumps ) <= T1 ) {
-            getNuclearStation();
-        }
-    } 
-    if  (magmatic < T1) {
-        while ((magmaticLunariteCost / lunariteps + magmaticSilverCost / silverps + magmaticGemCost / gemps ) <= T1 ) {
-            getMagmatic();
-        }
-    }     
-    if  (fusionReactor < T1) {
-        while ((fusionReactorLunariteCost / lunariteps + fusionReactorTitaniumCost / titaniumps + fusionReactorSiliconCost / siliconps ) <= T1 ) {
-            getFusionReactor();
-        }
-    }     
-}    
-   
