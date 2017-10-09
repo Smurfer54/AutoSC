@@ -1,6 +1,7 @@
 // ==/UserScript==
 
 //Magic Numbers/////////////////////////
+var AutoSC = true;
 var runInterval = 100;      //How often to loop through logic
 var UraniumT = 60;
 var LavaT = 60;
@@ -20,14 +21,14 @@ var HeliumT = 60;
 var IceT = 20;
 var PlasmaT = 60;
 var T1 = 100;
-var T2=1;
-var T21=1;
+var T2=10;
+var T21=10;
 var T22=1;
-var T31=1;
+var T31=10;
 var T32=1;
-var T41=1;
+var T41=10;
 var T42=1;
-var T51=1;
+var T51=10;
 var T52=1;
 ////////////////////////////////////////
 //Main LOGIC Loop///////////////////////
@@ -39,6 +40,7 @@ function delayStartAgain(){
 
 
 function mainLoop() {    
+    if AutoSc {
     Storage();
     BuyEnergy();
     BuyT1();
@@ -51,7 +53,7 @@ function mainLoop() {
     BuySwarm();
     BuySphere();
 }
-
+}
 function Storage() {
     upgradeMetalStorage();
     upgradeLunariteStorage();
@@ -159,7 +161,7 @@ function BuyT1() {
         }
     } 
     if  (crucible < T1) {
-        while ((crucibleLunariteCost / lunariteps + crucibleGemCost / gemps ) <= LavaT ) {
+        if ((crucibleLunariteCost / lunariteps + crucibleGemCost / gemps ) <= LavaT ) {
             getCrucible();
         }
     } 
