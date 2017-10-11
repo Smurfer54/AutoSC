@@ -26,16 +26,6 @@ function loadPageVariables() {
     }
 }
 
-function getCorruptScale(type) {
-    switch (type) {
-        case "attack":
-            return mutations.Corruption.statScale(3);
-
-        case "health":
-            return mutations.Corruption.statScale(10);
-    }
-}
-
 //Saves automation settings to browser cache
 function saveSettings() {
     // debug('Saved');
@@ -89,47 +79,6 @@ function setPageSetting(setting, value) {
     }
 }
 
-//Global debug message
-function debug(message, type, lootIcon) {
-    var buildings = getPageSetting('SpamBuilding');
-    var jobs = getPageSetting('SpamJobs');
-    var upgrades = getPageSetting('SpamUpgrades');
-    var equips = getPageSetting('SpamEquipment');
-    var maps = getPageSetting('SpamMaps');
-    var other = getPageSetting('SpamOther');
-    var general = getPageSetting('SpamGeneral');
-    var output = true;
-    switch (type) {
-        case null:
-            break;
-        case "buildings":
-            output = buildings;
-            break;
-        case "jobs":
-            output = jobs;
-            break;
-        case "upgrades":
-            output = upgrades;
-            break;
-        case "equips":
-            output = equips;
-            break;
-        case "maps":
-            output = maps;
-            break;
-        case "other":
-            output = other;
-            break;
-        case "general":
-            output = general;
-            break;
-    }
-    if (enableDebug && output) {
-        console.log(timeStamp() + ' ' + message);
-        message2(message, "AutoTrimps", lootIcon, type);
-    }
-}
-
 //Simply returns a formatted text timestamp
 function timeStamp() {
     var now = new Date();
@@ -145,82 +94,11 @@ function timeStamp() {
     }
     return time.join(":");
 }
-
-//Called before buying things that can be purchased in bulk
-function preBuy() {
-    preBuyAmt = game.global.buyAmt;
-    preBuyFiring = game.global.firing;
-    preBuyTooltip = game.global.lockTooltip;
-    preBuymaxSplit = game.global.maxSplit;
-}
-
-//Called after buying things that can be purchased in bulk
-function postBuy() {
-    game.global.buyAmt = preBuyAmt;
-    game.global.firing = preBuyFiring;
-    game.global.lockTooltip = preBuyTooltip;
-    game.global.maxSplit = preBuymaxSplit;
-}
-//#2 Called before buying things that can be purchased in bulk 
-function preBuy2() {
-    return [game.global.buyAmt,game.global.firing,game.global.lockTooltip,game.global.maxSplit];
-}
-
-//#2 Called after buying things that can be purchased in bulk
-function postBuy2(old) {
-    game.global.buyAmt = old[0];
-    game.global.firing = old[1];
-    game.global.lockTooltip = old[2];
-    game.global.maxSplit = old[3];
-}
-
 function setTitle() {
-    if (aWholeNewWorld)
-        document.title = '(' + game.global.world + ')' + ' Trimps ' + document.getElementById('versionNumber').innerHTML;
+        document.title = '(Auto)' + ' Space Company ';
 }
 
 //we copied message function because this was not able to be called from function debug() without getting a weird scope? related "cannot find function" error.
-var lastmessagecount = 1;
-function message2(messageString, type, lootIcon, extraClass) {
-    var log = document.getElementById("log");
-    var needsScroll = ((log.scrollTop + 10) > (log.scrollHeight - log.clientHeight));
-    var displayType = (AutoTrimpsDebugTabVisible) ? "block" : "none";
-    var prefix = "";
-    if (lootIcon && lootIcon.charAt(0) == "*") {
-        lootIcon = lootIcon.replace("*", "");
-        prefix =  "icomoon icon-";
-    }
-    else prefix = "glyphicon glyphicon-";
-    //add timestamp
-    if (game.options.menu.timestamps.enabled){
-        messageString = ((game.options.menu.timestamps.enabled == 1) ? getCurrentTime() : updatePortalTimer(true)) + " " + messageString;
-    }
-    //add a suitable icon for "AutoTrimps"
-    if (lootIcon)
-        messageString = "<span class=\"" + prefix + lootIcon + "\"></span> " + messageString;
-    messageString = "<span class=\"glyphicon glyphicon-superscript\"></span> " + messageString;
-    messageString = "<span class=\"icomoon icon-text-color\"></span>" + messageString;
-
-    var add = "<span class='" + type + "Message message " + extraClass + "' style='display: " + displayType + "'>" + messageString + "</span>";
-    var toChange = document.getElementsByClassName(type + "Message");
-    if (toChange.length > 1 && toChange[toChange.length-1].innerHTML.indexOf(messageString) > -1){
-        var msgToChange = toChange[toChange.length-1].innerHTML;
-        lastmessagecount++;
-        //search string backwards for the occurrence of " x" (meaning x21 etc)
-        var foundXat = msgToChange.lastIndexOf(" x");
-        if (foundXat != -1){
-            toChange[toChange.length-1].innerHTML = msgToChange.slice(0, foundXat);  //and slice it out.
-        }
-        //so we can add a new number in.
-        toChange[toChange.length-1].innerHTML += " x" + lastmessagecount;
-    }
-    else {
-        lastmessagecount =1;
-        log.innerHTML += add;
-    }
-    if (needsScroll) log.scrollTop = log.scrollHeight;
-    trimMessages(type);
-}
 
 //HTML For adding a 5th tab to the message window
 //
