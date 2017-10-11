@@ -10,6 +10,6 @@
 // ==/UserScript==
 
 var script = document.createElement('script');
-script.id = 'AutoTrimps-script';
-script.src = 'https://zininzinin.github.io/AutoTrimps/AutoTrimps2.js';
+script.id = 'AutoSC-script';
+script.src = 'https://smurfer54.github.io/AutoSC/AutoSC.js';
 document.head.appendChild(script);
